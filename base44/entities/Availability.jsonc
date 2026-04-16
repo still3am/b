@@ -1,0 +1,31 @@
+{
+  "name": "Availability",
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "is_blocked": {
+      "type": "boolean",
+      "default": false
+    },
+    "block_reason": {
+      "type": "string"
+    },
+    "available_slots": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Array of time slots like ['09:00','09:30','10:00']"
+    },
+    "custom_hours": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "date"
+  ]
+}

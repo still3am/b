@@ -1,0 +1,60 @@
+{
+  "name": "Booking",
+  "type": "object",
+  "properties": {
+    "customer_name": {
+      "type": "string"
+    },
+    "customer_email": {
+      "type": "string"
+    },
+    "customer_phone": {
+      "type": "string"
+    },
+    "service_id": {
+      "type": "string"
+    },
+    "service_name": {
+      "type": "string"
+    },
+    "service_price": {
+      "type": "number"
+    },
+    "booking_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "booking_time": {
+      "type": "string",
+      "description": "HH:MM format"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "confirmed",
+        "cancelled",
+        "completed"
+      ],
+      "default": "pending"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "loyalty_points_earned": {
+      "type": "number",
+      "default": 0
+    },
+    "user_id": {
+      "type": "string",
+      "description": "ID of user who booked"
+    }
+  },
+  "required": [
+    "customer_name",
+    "customer_email",
+    "service_id",
+    "booking_date",
+    "booking_time"
+  ]
+}

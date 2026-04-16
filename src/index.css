@@ -1,88 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    --background: 350 20% 98%;
+    --foreground: 340 15% 12%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
+    --card-foreground: 340 15% 12%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
+    --popover-foreground: 340 15% 12%;
+    --primary: 340 65% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 340 30% 95%;
+    --secondary-foreground: 340 15% 12%;
+    --muted: 340 20% 96%;
+    --muted-foreground: 340 10% 50%;
+    --accent: 320 60% 75%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 340 20% 88%;
+    --input: 340 20% 92%;
+    --ring: 340 65% 55%;
+    --chart-1: 340 65% 55%;
+    --chart-2: 320 60% 75%;
+    --chart-3: 350 50% 65%;
+    --chart-4: 310 40% 80%;
+    --chart-5: 330 70% 45%;
+    --radius: 0.75rem;
+
+    --pink-chrome: linear-gradient(135deg, #f8b4c8 0%, #e8638c 25%, #c8355e 50%, #e8638c 75%, #f8b4c8 100%);
+    --pink-glass: linear-gradient(135deg, rgba(255,182,207,0.4) 0%, rgba(232,99,140,0.2) 50%, rgba(255,182,207,0.4) 100%);
+    --chrome-shine: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.6) 50%, transparent 60%);
   }
 
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
+    --background: 340 20% 8%;
+    --foreground: 340 10% 95%;
+    --card: 340 15% 12%;
+    --card-foreground: 340 10% 95%;
+    --popover: 340 15% 12%;
+    --popover-foreground: 340 10% 95%;
+    --primary: 340 65% 65%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 340 15% 18%;
+    --secondary-foreground: 340 10% 95%;
+    --muted: 340 15% 18%;
+    --muted-foreground: 340 10% 60%;
+    --accent: 320 55% 60%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 340 15% 22%;
+    --input: 340 15% 22%;
+    --ring: 340 65% 65%;
   }
 }
-
-
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
-
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-inter;
+  }
+}
+
+@layer utilities {
+  .font-playfair {
+    font-family: 'Playfair Display', serif;
+  }
+  .font-inter {
+    font-family: 'Inter', sans-serif;
+  }
+
+  .chrome-card {
+    background: linear-gradient(135deg, #ffeef4 0%, #ffd6e7 30%, #ffb3d1 60%, #ffd6e7 80%, #fff0f5 100%);
+    border: 1px solid rgba(255, 150, 185, 0.4);
+    box-shadow: 
+      0 4px 24px rgba(200, 53, 94, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8),
+      inset 0 -1px 0 rgba(200, 53, 94, 0.2);
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 150, 185, 0.3);
+    box-shadow: 
+      0 8px 32px rgba(200, 53, 94, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+
+  .pink-gradient-bg {
+    background: linear-gradient(160deg, #fff0f5 0%, #ffe0ee 30%, #ffc8de 60%, #fff0f5 100%);
+  }
+
+  .chrome-button {
+    background: linear-gradient(135deg, #f472b6 0%, #ec4899 30%, #db2777 60%, #ec4899 80%, #f472b6 100%);
+    box-shadow: 
+      0 4px 15px rgba(219, 39, 119, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      inset 0 -1px 0 rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+  }
+
+  .chrome-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 
+      0 8px 25px rgba(219, 39, 119, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      inset 0 -1px 0 rgba(0,0,0,0.1);
+  }
+
+  .shine-overlay {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shine-overlay::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 40%;
+    height: 200%;
+    background: linear-gradient(105deg, transparent, rgba(255,255,255,0.5), transparent);
+    transform: skewX(-15deg);
+    animation: shine 4s ease-in-out infinite;
+  }
+
+  @keyframes shine {
+    0%, 100% { left: -60%; }
+    50% { left: 120%; }
+  }
+
+  .loyalty-glow {
+    box-shadow: 0 0 20px rgba(236, 72, 153, 0.3), 0 0 60px rgba(236, 72, 153, 0.1);
   }
 }
