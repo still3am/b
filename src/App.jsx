@@ -26,37 +26,30 @@ const AuthenticatedApp = () => {
 
   if (isLoadingPublicSettings || isLoadingAuth) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center pink-gradient-bg">
+      <div className="fixed inset-0 flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #fff5f8, #ffeaf3, #ffd6e8, #fff5f8)' }}>
         <div className="text-center">
-          <div className="font-playfair text-4xl font-bold bg-gradient-to-r from-pink-600 to-pink-400 bg-clip-text text-transparent mb-4 animate-pulse">
+          <div className="font-cormorant text-5xl font-bold mb-4 animate-pulse" style={{ background:'linear-gradient(135deg,#db2777,#ec4899,#f472b6)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent' }}>
             BOOKED
           </div>
-          <div className="w-6 h-6 border-2 border-pink-300 border-t-pink-600 rounded-full animate-spin mx-auto"></div>
+          <div className="w-6 h-6 border-2 border-pink-300 border-t-pink-600 rounded-full animate-spin mx-auto" />
         </div>
       </div>
     );
   }
 
   if (authError) {
-    if (authError.type === 'user_not_registered') {
-      return <UserNotRegisteredError />;
-    } else if (authError.type === 'auth_required') {
-      navigateToLogin();
-      return null;
-    }
+    if (authError.type === 'user_not_registered') return <UserNotRegisteredError />;
+    if (authError.type === 'auth_required') { navigateToLogin(); return null; }
   }
 
   return (
     <Routes>
       <Route element={<Layout />}>
-        {/* Customer routes */}
         <Route path="/" element={<Home />} />
         <Route path="/services" element={<Services />} />
         <Route path="/book" element={<Book />} />
         <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/loyalty" element={<Loyalty />} />
-
-        {/* Admin routes */}
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/admin/bookings" element={<AdminBookings />} />
         <Route path="/admin/services" element={<AdminServices />} />
