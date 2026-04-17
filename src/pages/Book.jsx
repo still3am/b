@@ -85,44 +85,65 @@ export default function Book() {
 
   const handleSubmit = async () => {
     setSubmitting(true);
-    const dateStr = selectedDate.toISOString().split('T')[0];
-    await base44.entities.Booking.create({
-      customer_name: form.name,
-      customer_email: form.email,
-      customer_phone: form.phone,
-      service_id: selectedService.id,
-      service_name: selectedService.name,
-      service_price: selectedService.price,
-      booking_date: dateStr,
-      booking_time: selectedTime,
-      notes: form.notes,
-      loyalty_points_earned: selectedService.loyalty_points || 10,
-      status: 'pending',
-      user_id: user?.id || '',
-    });
+    try {
+      const dateStr = selectedDate.toISOString().split('T')[0];
 
-    // Update loyalty points if logged in
-    if (user) {
-      const accounts = await base44.entities.LoyaltyAccount.filter({ user_email: user.email });
-      const pts = selectedService.loyalty_points || 10;
-      if (accounts.length > 0) {
-        const acc = accounts[0];
-        const newTotal = (acc.total_points || 0) + pts;
-        const lifetime = (acc.lifetime_points || 0) + pts;
-        const tier = lifetime >= 500 ? 'diamond' : lifetime >= 200 ? 'gold' : lifetime >= 75 ? 'silver' : 'bronze';
-        await base44.entities.LoyaltyAccount.update(acc.id, {
-          total_points: newTotal, lifetime_points: lifetime,
-          total_visits: (acc.total_visits || 0) + 1, tier,
-        });
-      } else {
-        await base44.entities.LoyaltyAccount.create({
-          user_id: user.id, user_email: user.email, user_name: user.full_name,
-          total_points: pts, lifetime_points: pts, total_visits: 1, tier: 'bronze',
-        });
+      // Re-validate slot is still free before submitting
+      const existingBookings = await base44.entities.Booking.filter({
+        booking_date: dateStr, booking_time: selectedTime, status: 'confirmed'
+      });
+      if (existingBookings.length > 0) {
+        alert('Sorry, that time was just booked. Please choose another slot.');
+        setStep(2);
+        return;
       }
+
+      await base44.entities.Booking.create({
+        customer_name: form.name,
+        customer_email: form.email,
+        customer_phone: form.phone,
+        service_id: selectedService.id,
+        service_name: selectedService.name,
+        service_price: selectedService.price,
+        booking_date: dateStr,
+        booking_time: selectedTime,
+        notes: form.notes,
+        loyalty_points_earned: selectedService.loyalty_points || 10,
+        status: 'pending',
+        user_id: user?.id || '',
+      });
+
+      // Update loyalty points if logged in
+      if (user?.email) {
+        try {
+          const accounts = await base44.entities.LoyaltyAccount.filter({ user_email: user.email });
+          const pts = selectedService.loyalty_points || 10;
+          if (accounts.length > 0) {
+            const acc = accounts[0];
+            const newTotal = (acc.total_points || 0) + pts;
+            const lifetime = (acc.lifetime_points || 0) + pts;
+            const tier = lifetime >= 500 ? 'diamond' : lifetime >= 200 ? 'gold' : lifetime >= 75 ? 'silver' : 'bronze';
+            await base44.entities.LoyaltyAccount.update(acc.id, {
+              total_points: newTotal, lifetime_points: lifetime,
+              total_visits: (acc.total_visits || 0) + 1, tier,
+            });
+          } else {
+            await base44.entities.LoyaltyAccount.create({
+              user_id: user.id, user_email: user.email, user_name: user.full_name,
+              total_points: pts, lifetime_points: pts, total_visits: 1, tier: 'bronze',
+            });
+          }
+        } catch (e) {
+          console.warn('Loyalty update failed', e);
+        }
+      }
+
+      setDone(true);
+    } catch (err) {
+      alert('Booking failed. Please try again.');
+    } finally {
+      setSubmitting(false);
     }
-    setDone(true);
-    setSubmitting(false);
   };
 
   if (done) {
@@ -315,7 +336,7 @@ export default function Book() {
               </button>
               <button
                 onClick={handleSubmit}
-                disabled={!form.name || !form.email || submitting}
+                disabled={!form.name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email) || submitting}
                 className="flex-1 chrome-button text-white font-medium py-2.5 rounded-full text-sm disabled:opacity-40 flex items-center justify-center gap-1"
               >
                 {submitting ? 'Booking...' : 'Confirm Booking'} {!submitting && <Check size={14} />}

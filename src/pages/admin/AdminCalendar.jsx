@@ -22,14 +22,15 @@ export default function AdminCalendar() {
   const [existingRecord, setExistingRecord] = useState(null);
 
   useEffect(() => {
+    const monthStr = `${year}-${String(month + 1).padStart(2, '0')}`;
     Promise.all([
       base44.entities.Availability.list(),
       base44.entities.Booking.list(),
     ]).then(([avail, bkgs]) => {
       const map = {};
-      avail.forEach(a => { map[a.date] = a; });
+      avail.filter(a => a.date?.startsWith(monthStr)).forEach(a => { map[a.date] = a; });
       setAvailability(map);
-      setBookings(bkgs);
+      setBookings(bkgs.filter(b => b.booking_date?.startsWith(monthStr)));
     });
   }, [year, month]);
 

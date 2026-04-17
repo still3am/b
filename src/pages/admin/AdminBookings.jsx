@@ -23,8 +23,8 @@ export default function AdminBookings() {
 
   const load = () => {
     setLoading(true);
-    base44.entities.Booking.list('-booking_date', 100)
-      .then(setBookings)
+    base44.entities.Booking.list()
+      .then(data => setBookings([...data].sort((a, b) => (b.booking_date || '').localeCompare(a.booking_date || ''))))
       .finally(() => setLoading(false));
   };
 

@@ -8,13 +8,15 @@ export default function DeleteAccountDialog({ onClose }) {
 
   const handleDelete = async () => {
     setDeleting(true);
-    // Delete loyalty account data for the user
-    const me = await base44.auth.me();
-    const accounts = await base44.entities.LoyaltyAccount.filter({ user_email: me.email });
-    for (const acc of accounts) {
-      await base44.entities.LoyaltyAccount.delete(acc.id);
+    try {
+      const me = await base44.auth.me();
+      const accounts = await base44.entities.LoyaltyAccount.filter({ user_email: me.email });
+      await Promise.all(accounts.map(acc => base44.entities.LoyaltyAccount.delete(acc.id)));
+      base44.auth.logout('/');
+    } catch (e) {
+      alert('Failed to delete account. Please try again.');
+      setDeleting(false);
     }
-    base44.auth.logout('/');
   };
 
   return (
